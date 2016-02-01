@@ -20,16 +20,18 @@ async def on_ready():
     print("------------------")
     
 
-async def delete_messages(message):
+async def delete_messages(message, author):
     async for historicMessage in client.logs_from(message.channel):
         if historicMessage.author == client.user:
-            await client.delete_message(historicMessage)
+            if (author.name in historicMessage.content) or (author.mention in historicMessage.content):
+                await client.delete_message(historicMessage)
             
         if historicMessage.content.startswith('.r'):
-            try:
-               await client.delete_message(historicMessage)
-            except:
-               print('Error: Cannot delete messages!')  
+            if author == historicMessage.author:
+                try:
+                   await client.delete_message(historicMessage)
+                except:
+                   print('Error: Cannot delete messages!')  
   
 async def roll(message, single=True):
 
@@ -43,7 +45,7 @@ async def roll(message, single=True):
         
     numDice = dice.split('d')[0]
     diceVal = dice.split('d')[1]
-    await client.send_message(message.channel, "Rolling %s d%s" % (numDice, diceVal))
+    await client.send_message(message.channel, "Rolling %s d%s for %s" % (numDice, diceVal, message.author))
     
     try:
         rolls, limit = map(int, dice.split('d'))
@@ -69,11 +71,11 @@ async def on_message(message):
             command = message.content[3:]
             
             if not command:
-                await delete_messages(message)
+                await delete_messages(message, message.author)
                 await roll(message)
             
             elif command != 'help':
-                await delete_messages(message)
+                await delete_messages(message, message.author)
                 await roll(message, False)
             
             else:
