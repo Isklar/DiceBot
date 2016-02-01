@@ -45,7 +45,7 @@ async def roll(message, single=True):
         
     numDice = dice.split('d')[0]
     diceVal = dice.split('d')[1]
-    await client.send_message(message.channel, "Rolling %s d%s for %s" % (numDice, diceVal, message.author))
+    await client.send_message(message.channel, "─────────────────────────\nRolling %s d%s for %s" % (numDice, diceVal, message.author))
     
     try:
         rolls, limit = map(int, dice.split('d'))
@@ -62,7 +62,7 @@ async def roll(message, single=True):
         else:
             resultString += ', ' + str(number)
 
-    await client.send_message(message.channel, message.author.mention + "  :game_die:\n**Result:** " + resultString + "\n**Total:** " + str(resultTotal))
+    await client.send_message(message.channel, message.author.mention + "  :game_die:\n**Result:** " + resultString + "\n**Total:** " + str(resultTotal) + "\n─────────────────────────")
     
 @client.event
 async def on_message(message):
