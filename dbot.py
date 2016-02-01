@@ -45,7 +45,7 @@ async def roll(message, single=True):
         
     numDice = dice.split('d')[0]
     diceVal = dice.split('d')[1]
-    await client.send_message(message.channel, "─────────────────────────\nRolling %s d%s for %s" % (numDice, diceVal, message.author))
+    await client.send_message(message.channel, "Rolling %s d%s for %s" % (numDice, diceVal, message.author))
     
     try:
         rolls, limit = map(int, dice.split('d'))
