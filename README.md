@@ -16,7 +16,7 @@ Roll dice using `.r 2d20`
 If you give the bot permissions to manage messages on your server it will delete and previous rolls from the same user to avoid cluttering up chat.
 
 ### Extra bits
-Thanks to Rappyz/Danny for the discord.py wrapper.
+Thanks to Rapptz for the discord.py wrapper.
 
 If you want any customization done to this bot for your own use feel free to join my [testing server](https://discord.gg/0n4QSS0mmQNtD5Ve) and message me
 
