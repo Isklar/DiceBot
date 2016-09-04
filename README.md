@@ -3,13 +3,18 @@ D&D Dice rolling bot for discord written in python.
 
 ## Requirements
 This bot uses the [discord.py API wrapper](https://github.com/Rapptz/discord.py), you'll need to set that up for this bot to work.
-You'll also need an account for the bot.
 
+Create a bot account using the [discord developer section](https://discordapp.com/developers/applications/me)
 
 ## Usage
-Add your credentials in `options.py`
+Add your bot token in `options.py`
 
-Start the bot using `python dbot.py`
+Add the bot to your server using the OAUTH url:
+https://discordapp.com/oauth2/authorize?client_id=BOTCLIENTIDHERE&scope=bot&permissions=0x00002000
+
+:exclamation: Make sure to insert your bots client ID in the url.
+
+Start the bot using `python dbot.py` or by running RunLoop.bat
 
 Roll dice using `.r 2d20`
 
