@@ -18,7 +18,7 @@ async def on_ready():
 @bot.event
 async def on_command_error(error, ctx):
     if isinstance(error, commands.MissingRequiredArgument):
-        await bot.send_message(ctx.message.author, 'Incorrect usage. Usage: .r XdX | .r 5d20')
+        await bot.say('Usage: `.r XdX` e.g. `.r 1d20`')
     
 
 async def delete_messages(message, author):
@@ -32,7 +32,7 @@ async def delete_messages(message, author):
                 try:
                    await bot.delete_message(historicMessage)
                 except:
-                   print('Error: Cannot delete message!')  
+                   print('Error: Cannot delete user message!')  
 
 
 @bot.command(pass_context=True)
@@ -47,17 +47,17 @@ async def r(ctx, dice : str):
         numDice = dice.split('d')[0]
         diceVal = dice.split('d')[1]
     except Exception:
-        await bot.say("Format has to be in xdx %s." % ctx.message.author)
+        await bot.say("Format has to be in xdx %s." % ctx.message.author.name)
         return
 
     if int(numDice) > 500:
-        await bot.say("I cant roll that many dice %s." % ctx.message.author)
+        await bot.say("I cant roll that many dice %s." % ctx.message.author.name)
         return
 
     await delete_messages(ctx.message, ctx.message.author)
     
     bot.type()
-    await bot.say("Rolling %s d%s for %s" % (numDice, diceVal, ctx.message.author))
+    await bot.say("Rolling %s d%s for %s" % (numDice, diceVal, ctx.message.author.name))
     rolls, limit = map(int, dice.split('d'))
 
     for r in range(rolls):
@@ -70,9 +70,9 @@ async def r(ctx, dice : str):
             resultString += ', ' + str(number)
     
     if numDice == '1':
-        await bot.say(ctx.message.author.mention + "  :game_die:\n**Result:** " + resultString + "\n─────────────────────────")
+        await bot.say(ctx.message.author.mention + "  :game_die:\n**Result:** " + resultString)
     else:
-        await bot.say(ctx.message.author.mention + "  :game_die:\n**Result:** " + resultString + "\n**Total:** " + str(resultTotal) + "\n─────────────────────────")
+        await bot.say(ctx.message.author.mention + "  :game_die:\n**Result:** " + resultString + "\n**Total:** " + str(resultTotal))
 
 
 bot.run(options.username, options.password)
