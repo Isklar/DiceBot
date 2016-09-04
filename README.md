@@ -18,7 +18,7 @@ Start the bot using `python dbot.py` or by running RunLoop.bat
 
 Roll dice using `.r 2d20`
 
-If you give the bot permissions to manage messages on your server it will delete and previous rolls from the same user to avoid cluttering up chat.
+If you give the bot permissions to manage messages on your server it will delete any previous roll messages from the same user to avoid cluttering up chat.
 
 ### Extra bits
 Thanks to Rapptz for the discord.py wrapper.
