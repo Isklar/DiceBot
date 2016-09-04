@@ -1,2 +1,1 @@
-username = 'myaccount@discord.com'
-password = 'mypassword'
+token = 'bot.token'

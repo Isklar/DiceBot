@@ -75,4 +75,4 @@ async def r(ctx, dice : str):
         await bot.say(ctx.message.author.mention + "  :game_die:\n**Result:** " + resultString + "\n**Total:** " + str(resultTotal))
 
 
-bot.run(options.username, options.password)
+bot.run(options.token)
