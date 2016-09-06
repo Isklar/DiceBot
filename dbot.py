@@ -36,18 +36,19 @@ async def delete_messages(message, author):
 
 
 @bot.command(pass_context=True)
-async def r(ctx, dice : str):
-    """Rolls a dice using XdX format.
+async def r(ctx, roll : str):
+    """Rolls a dice using #d# format.
     e.g .r 3d6"""
     
     resultTotal = 0
     resultString = ''
     
     try: 
-        numDice = dice.split('d')[0]
-        diceVal = dice.split('d')[1]
-    except Exception:
-        await bot.say("Format has to be in xdx %s." % ctx.message.author.name)
+        numDice = roll.split('d')[0]
+        diceVal = roll.split('d')[1]
+    except Exception as e:
+        print(e)
+        await bot.say("Format has to be in #d# %s." % ctx.message.author.name)
         return
 
     if int(numDice) > 500:
