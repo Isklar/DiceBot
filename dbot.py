@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import random
-import options
+import credentials
 import string
 import re
 
@@ -153,4 +153,4 @@ async def rt(ctx, roll : str):
         print(e)
         return
 
-bot.run(options.token)
+bot.run(credentials.token)
