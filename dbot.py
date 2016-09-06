@@ -18,7 +18,7 @@ async def on_ready():
 @bot.event
 async def on_command_error(error, ctx):
     if isinstance(error, commands.MissingRequiredArgument):
-        await bot.say('Usage: `.r XdX` e.g. `.r 1d20`')
+        await bot.send_message(ctx.message.channel, 'Usage: `.r #d#` e.g. `.r 1d20`\nUse .help for more info.')
     
 
 async def delete_messages(message, author):
