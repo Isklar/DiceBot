@@ -1,8 +1,9 @@
-﻿import discord
+import discord
 from discord.ext import commands
 import random
 import options
 import string
+import re
 
 
 description = '''D&D Dice rolling bot.'''
@@ -75,5 +76,81 @@ async def r(ctx, roll : str):
     else:
         await bot.say(ctx.message.author.mention + "  :game_die:\n**Result:** " + resultString + "\n**Total:** " + str(resultTotal))
 
+@bot.command(pass_context=True)
+async def rt(ctx, roll : str):
+    """Rolls dice using #d#s# format with a set success threshold, Where s is the thresold type (< = >).
+    e.g .r 3d10<55"""
+
+    numberSuccesses = 0
+    resultString = ''
+    
+    try: 
+        valueList = re.split("(\d+)", roll)
+        valueList = list(filter(None, valueList))
+
+        diceCount = int(valueList[0])
+        diceValue = int(valueList[2])
+        thresholdSign = valueList[3]
+        successThreshold = int(valueList[4])
+
+    except Exception as e:
+        print(e)
+        await bot.say("Format has to be in #d#t# %s." % ctx.message.author.name)
+        return
+    
+    if int(diceCount) > 500:
+        await bot.say("I cant roll that many dice %s." % ctx.message.author.name)
+        return
+
+    await delete_messages(ctx.message, ctx.message.author)
+
+    bot.type()
+    await bot.say("Rolling %s d%s for %s with a success theshold %s %s" % (diceCount, diceValue, ctx.message.author.name, thresholdSign, successThreshold))
+
+    try:
+        for r in range(0, diceCount):
+
+            number = random.randint(1, diceValue)
+            isRollSuccess = False
+            
+            if thresholdSign == '<':
+                if number < successThreshold:
+                    numberSuccesses += 1
+                    isRollSuccess = True
+
+            elif thresholdSign == '=':
+                if number == successThreshold:
+                    numberSuccesses += 1
+                    isRollSuccess = True
+
+            else: # >
+                if number > successThreshold:
+                    numberSuccesses += 1
+                    isRollSuccess = True
+
+            if resultString == '':
+                if isRollSuccess:
+                    resultString += '**' + str(number) + '**'
+                else:
+                    resultString += str(number)
+            else:
+                if isRollSuccess:
+                    resultString += ', ' + '**' + str(number) + '**'
+                else:
+                    resultString += ', ' + str(number)
+
+            isRollSuccess = False
+
+
+        if diceCount == 1:
+            if numberSuccesses == 0:
+                await bot.say(ctx.message.author.mention + "  :game_die:\n**Result:** " + resultString + "\n**Success:** :x:" )
+            else:
+                await bot.say(ctx.message.author.mention + "  :game_die:\n**Result:** " + resultString + "\n**Success:** :white_check_mark:" )
+        else:
+            await bot.say(ctx.message.author.mention + "  :game_die:\n**Result:** " + resultString + "\n**Successes:** " + str(numberSuccesses))
+    except Exception as e:
+        print(e)
+        return
 
 bot.run(options.token)
